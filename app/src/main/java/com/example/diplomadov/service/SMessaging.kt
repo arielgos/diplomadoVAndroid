@@ -9,10 +9,15 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
 class SMessaging : FirebaseMessagingService() {
+
+    companion object {
+        const val broadcastReceiver = "broadcast"
+    }
+
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
 
-        val intent = Intent(getString(R.string.default_channel))
+        val intent = Intent(broadcastReceiver)
         intent.putExtra("title", remoteMessage.notification?.title)
         intent.putExtra("body", remoteMessage.notification?.body)
 

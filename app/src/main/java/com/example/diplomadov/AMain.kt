@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.diplomadov.databinding.ActivityMainBinding
 import com.example.diplomadov.model.User
+import com.example.diplomadov.service.SMessaging
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
@@ -93,7 +94,7 @@ class AMain : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         LocalBroadcastManager.getInstance(applicationContext)
-            .registerReceiver(messageReceiver, IntentFilter(getString(R.string.default_channel)))
+            .registerReceiver(messageReceiver, IntentFilter(SMessaging.broadcastReceiver))
     }
 
     override fun onPause() {
