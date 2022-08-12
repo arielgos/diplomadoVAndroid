@@ -1,7 +1,10 @@
 package com.example.diplomadov
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import com.example.diplomadov.databinding.ActivityMainBinding
 import com.example.diplomadov.model.User
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -58,5 +61,21 @@ class AMain : AppCompatActivity() {
         Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
             param(FirebaseAnalytics.Param.SCREEN_NAME, "Main")
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_exit -> {
+                FirebaseAuth.getInstance().signOut()
+                startActivity(Intent(this@AMain, ASplash::class.java))
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
