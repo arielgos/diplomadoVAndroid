@@ -2,6 +2,9 @@
     <string name="app_name">Amazing Store</string>
     <string name="access">Ingresar</string>
     <string name="exit">Salir</string>
+    <string name="cart">Carrito de Compra</string>
+    <string name="chat">Chat</string>
+    <!--Cloud Messaging-->
     <string name="default_channel">amazingstore</string>
     <!--Google Client Id-->
     <string name="web_client_id" translatable="false">135023020170-s0lfka1809piuad8a4g70betdo625s1t.apps.googleusercontent.com</string>

@@ -18,6 +18,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
@@ -73,9 +74,15 @@ class AMain : AppCompatActivity() {
                     Log.d(Utils.tag, "Push Notification token $token")
                 })
 
+                /**
+                 * Realtime
+                 */
+                FirebaseDatabase.getInstance().getReference(currentUser?.id!!).setValue(listOf(""))
+
             }.addOnFailureListener {
                 it.printStackTrace()
             }
+
 
         /**
          * Cloud Messaging
