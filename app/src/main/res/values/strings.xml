@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">DiplomadoV</string>
+    <string name="app_name">Amazing Store</string>
     <string name="access">Ingresar</string>
     <string name="exit">Salir</string>
+    <string name="default_channel">amazingstore</string>
     <!--Google Client Id-->
     <string name="web_client_id">135023020170-s0lfka1809piuad8a4g70betdo625s1t.apps.googleusercontent.com</string>
 </resources>

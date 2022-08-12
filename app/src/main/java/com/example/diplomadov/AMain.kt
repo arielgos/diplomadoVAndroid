@@ -3,16 +3,19 @@ package com.example.diplomadov
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.example.diplomadov.databinding.ActivityMainBinding
 import com.example.diplomadov.model.User
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.ktx.get
 import com.google.firebase.remoteconfig.ktx.remoteConfig
@@ -51,9 +54,29 @@ class AMain : AppCompatActivity() {
             .document(FirebaseAuth.getInstance().currentUser?.uid!!).get()
             .addOnSuccessListener {
                 currentUser = it.toObject(User::class.java)
+
+                /**
+                 * Cloud Messaging
+                 */
+                FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        return@OnCompleteListener
+                    }
+                    val token = task.result
+                    currentUser?.token = token
+                    it.reference.set(currentUser!!)
+                    Log.d(Utils.tag, "Push Notification token $token")
+                })
+
             }.addOnFailureListener {
                 it.printStackTrace()
             }
+        
+        /**
+         * Cloud Messaging
+         */
+        FirebaseMessaging.getInstance().subscribeToTopic("amazingstore")
+        FirebaseMessaging.getInstance().subscribeToTopic("android")
 
         /**
          * Analytics

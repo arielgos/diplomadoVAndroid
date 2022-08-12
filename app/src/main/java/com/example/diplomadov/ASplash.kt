@@ -110,7 +110,6 @@ class ASplash : AppCompatActivity() {
                                         }.addOnFailureListener {
                                             it.printStackTrace()
                                         }
-
                                 }
                             }
                     }
