@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "135023020170",
+    "firebase_url": "https://diplomadov-f5e39-default-rtdb.firebaseio.com",
     "project_id": "diplomadov-f5e39",
     "storage_bucket": "diplomadov-f5e39.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "135023020170-bboounv7gnar3lstmeqncbj10s5lq0p0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.diplomadov",
+            "certificate_hash": "2c9d9c9ae1127cc661922f02123304e186fe58cc"
+          }
+        },
         {
           "client_id": "135023020170-eir0gvvi8mq0uheeh3bdgfjf8jcokrrh.apps.googleusercontent.com",
           "client_type": 1,
