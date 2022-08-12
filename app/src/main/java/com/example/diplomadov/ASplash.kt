@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.IntentSender
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.diplomadov.databinding.ActivitySplashBinding
 import com.example.diplomadov.model.User
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
@@ -66,6 +67,17 @@ class ASplash : AppCompatActivity() {
             param(FirebaseAnalytics.Param.SCREEN_NAME, "Splash")
         }
 
+        /**
+         * Cloud Messaging
+         */
+        if (intent?.extras != null) {
+            val bundle = intent.extras
+            if (bundle != null) {
+                for (key in bundle.keySet()) {
+                    Log.d(Utils.tag, "Key: $key - Value: ${bundle.get(key)}")
+                }
+            }
+        }
     }
 
     override fun onStart() {

@@ -1,11 +1,15 @@
 package com.example.diplomadov
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.diplomadov.databinding.ActivityMainBinding
 import com.example.diplomadov.model.User
 import com.google.android.gms.tasks.OnCompleteListener
@@ -71,7 +75,7 @@ class AMain : AppCompatActivity() {
             }.addOnFailureListener {
                 it.printStackTrace()
             }
-        
+
         /**
          * Cloud Messaging
          */
@@ -83,6 +87,31 @@ class AMain : AppCompatActivity() {
          */
         Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
             param(FirebaseAnalytics.Param.SCREEN_NAME, "Main")
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        LocalBroadcastManager.getInstance(applicationContext)
+            .registerReceiver(messageReceiver, IntentFilter(getString(R.string.default_channel)))
+    }
+
+    override fun onPause() {
+        LocalBroadcastManager.getInstance(applicationContext)
+            .unregisterReceiver(messageReceiver)
+        super.onPause()
+    }
+
+    private val messageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.extras != null) {
+                val bundle = intent.extras
+                if (bundle != null) {
+                    for (key in bundle.keySet()) {
+                        Log.d(Utils.tag, "Key: $key - Value: ${bundle.get(key)}")
+                    }
+                }
+            }
         }
     }
 
