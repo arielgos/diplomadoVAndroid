@@ -13,8 +13,8 @@ class SMessaging : FirebaseMessagingService() {
         super.onMessageReceived(remoteMessage)
 
         val intent = Intent(getString(R.string.default_channel))
-        intent.putExtra("title",remoteMessage.notification?.title)
-        intent.putExtra("body",remoteMessage.notification?.body)
+        intent.putExtra("title", remoteMessage.notification?.title)
+        intent.putExtra("body", remoteMessage.notification?.body)
 
         if (remoteMessage.data.isNotEmpty()) {
             for (key in remoteMessage.data.keys) {
@@ -23,5 +23,9 @@ class SMessaging : FirebaseMessagingService() {
         }
 
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
+    }
+
+    override fun onNewToken(token: String) {
+        Log.d(Utils.tag, "New Token $token")
     }
 }
