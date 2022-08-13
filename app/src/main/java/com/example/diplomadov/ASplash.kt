@@ -83,7 +83,16 @@ class ASplash : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         if (FirebaseAuth.getInstance().currentUser != null) {
-            startActivity(Intent(this@ASplash, AMain::class.java))
+            val mainIntent = Intent(this@ASplash, AMain::class.java)
+            if (intent.extras != null) {
+                val bundle = intent.extras
+                if (bundle != null) {
+                    for (key in bundle.keySet()) {
+                        mainIntent.putExtra(key, bundle.get(key).toString())
+                    }
+                }
+            }
+            startActivity(mainIntent)
             finish()
         }
     }

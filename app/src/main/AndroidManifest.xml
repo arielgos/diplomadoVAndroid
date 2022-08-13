@@ -24,7 +24,7 @@
             android:resource="@drawable/ic_launcher_foreground" />
 
         <meta-data
-            android:name="com.google.firebase.messaging.default_notification_colo"
+            android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/purple_700" />
 
         <meta-data

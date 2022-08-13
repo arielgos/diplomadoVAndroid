@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.diplomadov.databinding.ActivityMainBinding
@@ -96,6 +97,21 @@ class AMain : AppCompatActivity() {
         Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
             param(FirebaseAnalytics.Param.SCREEN_NAME, "Main")
         }
+
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+
+        if (intent?.extras != null) {
+            val bundle = intent.extras
+            if (bundle != null) {
+                for (key in bundle.keySet()) {
+                    Log.d(Utils.tag, "Main Activity - Key: $key - Value: ${bundle.get(key)}")
+                }
+            }
+        }
+
     }
 
     override fun onResume() {
@@ -118,6 +134,8 @@ class AMain : AppCompatActivity() {
                     for (key in bundle.keySet()) {
                         Log.d(Utils.tag, "Key: $key - Value: ${bundle.get(key)}")
                     }
+
+                    Toast.makeText(applicationContext, "${bundle.get("body")}", Toast.LENGTH_LONG).show()
                 }
             }
         }
