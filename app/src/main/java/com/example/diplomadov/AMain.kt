@@ -134,6 +134,18 @@ class AMain : AppCompatActivity() {
             startActivityForResult(intent, Utils.requestImage)
         }
 
+        /**
+         * Firestore
+         */
+        FirebaseFirestore.getInstance()
+            .collection("products")
+            .get()
+            .addOnSuccessListener {
+                
+            }.addOnFailureListener {
+                it.printStackTrace()
+            }
+
     }
 
     override fun onNewIntent(intent: Intent?) {

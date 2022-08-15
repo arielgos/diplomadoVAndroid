@@ -60,11 +60,19 @@
             android:parentActivityName=".AMain"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".ACart"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:parentActivityName=".AMain"
+            android:screenOrientation="portrait" />
+
         <!-- Crop Activity-->
         <activity
             android:name="com.canhub.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
 
+        <!-- Service -->
         <service
             android:name=".service.SMessaging"
             android:enabled="true"

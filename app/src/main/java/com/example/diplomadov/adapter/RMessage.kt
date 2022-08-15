@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat
 
 class RMessage(
     private val context: Context
-) : ListAdapter<Message, RMessage.ViewHolder>(DiffCallback) {
+) : ListAdapter<Message, RMessage.ViewHolder>(MessageDiffCallback) {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val container: LinearLayout = itemView.findViewById(R.id.container)
@@ -55,7 +55,7 @@ class RMessage(
     }
 }
 
-object DiffCallback : DiffUtil.ItemCallback<Message>() {
+object MessageDiffCallback : DiffUtil.ItemCallback<Message>() {
     override fun areItemsTheSame(oldItem: Message, newItem: Message): Boolean {
         return oldItem == newItem
     }
