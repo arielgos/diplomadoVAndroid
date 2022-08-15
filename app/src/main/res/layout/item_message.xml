@@ -13,6 +13,7 @@
         android:layout_margin="5dp"
         android:background="@drawable/curve_purple"
         android:orientation="vertical"
+        android:gravity="end"
         android:padding="5dp">
 
         <TextView
@@ -23,6 +24,7 @@
 
         <TextView
             android:id="@+id/user"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="11sp" />

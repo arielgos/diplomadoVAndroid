@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
@@ -26,7 +27,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
@@ -42,6 +43,8 @@ import java.util.*
 class AMain : AppCompatActivity() {
 
     private var currentUser: User? = null
+    private var shoppingReference: DatabaseReference? = null
+    private var cartBadge: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,10 +89,27 @@ class AMain : AppCompatActivity() {
                     Log.d(Utils.tag, "Push Notification token $token")
                 })
 
+
+                /**
+                 * Realtime Database
+                 */
+                shoppingReference = FirebaseDatabase.getInstance().getReference("cart").child(currentUser?.id!!)
+
+                shoppingReference!!.addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        cartBadge?.text = snapshot.childrenCount.toString()
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+
+                    }
+
+                })
+
+
             }.addOnFailureListener {
                 it.printStackTrace()
             }
-
 
         /**
          * Cloud Messaging
@@ -113,6 +133,7 @@ class AMain : AppCompatActivity() {
                 .getIntent(applicationContext)
             startActivityForResult(intent, Utils.requestImage)
         }
+
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -158,6 +179,7 @@ class AMain : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
+        cartBadge = menu.findItem(R.id.action_cart).actionView.findViewById<TextView>(R.id.cart_badge)
         return true
     }
 

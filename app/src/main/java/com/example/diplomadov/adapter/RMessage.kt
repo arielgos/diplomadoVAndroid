@@ -33,8 +33,10 @@ class RMessage(
         fun bind(message: Message, context: Context) {
             currentMessage = message
             if (!currentMessage!!.own) {
-                container.gravity = Gravity.LEFT
+                container.gravity = Gravity.START
                 background.background = ContextCompat.getDrawable(context, R.drawable.curve_teal)
+                background.gravity = Gravity.START
+                userTextView.visibility = View.VISIBLE
             }
             userTextView.text = currentMessage?.name
             messageTextView.text = currentMessage?.message
