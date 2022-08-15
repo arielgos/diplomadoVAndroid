@@ -1,16 +1,15 @@
 package com.example.diplomadov.model
 
-import com.google.firebase.database.Exclude
-import com.google.firebase.database.IgnoreExtraProperties
 import java.io.Serializable
 
-@IgnoreExtraProperties
-data class User(
+data class Product(
     var id: String,
     var name: String,
-    var email: String,
-    var token: String = "",
-    var profile: Int = 0
+    var description: String,
+    var tags: String = "",
+    var image: String = "",
+    var price: Double = 0.0,
+    var status: Boolean = false
 ) : Serializable {
-    constructor() : this("", "", "", "", 0)
+    constructor() : this("", "", "", "", "")
 }

@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.diplomadov.databinding.ActivityMainBinding
+import com.example.diplomadov.model.Product
 import com.example.diplomadov.model.User
 import com.example.diplomadov.service.SMessaging
 import com.google.android.gms.tasks.OnCompleteListener
@@ -45,6 +46,7 @@ class AMain : AppCompatActivity() {
     private var currentUser: User? = null
     private var shoppingReference: DatabaseReference? = null
     private var cartBadge: TextView? = null
+    private var products: MutableList<Product> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -125,7 +127,7 @@ class AMain : AppCompatActivity() {
         }
 
         /**
-         * Actions
+         * Image Actions
          */
         binding.camera.setOnClickListener {
             val intent = com.canhub.cropper.CropImage.activity()
@@ -139,12 +141,18 @@ class AMain : AppCompatActivity() {
          */
         FirebaseFirestore.getInstance()
             .collection("products")
+            .whereGreaterThan("price", 0.0)
+            .whereEqualTo("status", true)
             .get()
-            .addOnSuccessListener {
-                
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    Log.d(Utils.tag, "${document.id} => ${document.data}")
+                    products.add(document.toObject(Product::class.java))
+                }
             }.addOnFailureListener {
                 it.printStackTrace()
             }
+
 
     }
 

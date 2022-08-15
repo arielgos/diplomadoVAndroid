@@ -2,12 +2,12 @@ package com.example.diplomadov.model
 
 import java.io.Serializable
 
-data class Product(
+data class User(
     var id: String,
     var name: String,
-    var description: String,
-    var tags: String = "",
-    var image: String = ""
+    var email: String,
+    var token: String = "",
+    var profile: Int = 0
 ) : Serializable {
-    constructor() : this("", "", "", "", "")
+    constructor() : this("", "", "", "", 0)
 }
