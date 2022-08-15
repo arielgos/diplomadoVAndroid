@@ -93,7 +93,7 @@ class AMain : AppCompatActivity() {
                 /**
                  * Realtime Database
                  */
-                shoppingReference = FirebaseDatabase.getInstance().getReference("cart").child(currentUser?.id!!)
+                shoppingReference = FirebaseDatabase.getInstance().getReference("carts").child(currentUser?.id!!)
 
                 shoppingReference!!.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
