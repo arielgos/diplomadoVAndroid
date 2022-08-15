@@ -4,6 +4,7 @@
     <string name="exit">Salir</string>
     <string name="cart">Carrito de Compra</string>
     <string name="chat">Chat</string>
+    <string name="photo">Foto</string>
     <!--Cloud Messaging-->
     <string name="default_channel">amazingstore</string>
     <!--Google Client Id-->

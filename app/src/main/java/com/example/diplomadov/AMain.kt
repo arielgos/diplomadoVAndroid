@@ -1,16 +1,23 @@
 package com.example.diplomadov
 
+import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.example.diplomadov.databinding.ActivityMainBinding
 import com.example.diplomadov.model.User
 import com.example.diplomadov.service.SMessaging
@@ -27,6 +34,10 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.ktx.get
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
+import com.google.firebase.storage.FirebaseStorage
+import java.io.ByteArrayOutputStream
+import java.io.FileInputStream
+import java.util.*
 
 class AMain : AppCompatActivity() {
 
@@ -98,6 +109,15 @@ class AMain : AppCompatActivity() {
             param(FirebaseAnalytics.Param.SCREEN_NAME, "Main")
         }
 
+        /**
+         * Actions
+         */
+        binding.camera.setOnClickListener {
+            val intent = com.canhub.cropper.CropImage.activity()
+                .setAspectRatio(Utils.imageWith, Utils.imageHeight)
+                .getIntent(applicationContext)
+            startActivityForResult(intent, Utils.requestImage)
+        }
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -153,45 +173,51 @@ class AMain : AppCompatActivity() {
                 startActivity(Intent(this@AMain, ASplash::class.java))
                 finish()
             }
+            R.id.action_chat -> {
+
+            }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private val cropImage = registerForActivityResult(CropImageContract()) { result ->
-        if (result.isSuccessful) {
-            // use the returned uri
-            val uriContent = result.uriContent
-            val uriFilePath = result.getUriFilePath(applicationContext) // optional usage
-        } else {
-            // an error occurred
-            val exception = result.error
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                Utils.requestImage -> {
+                    val result = com.canhub.cropper.CropImage.getActivityResult(data)
+                    Glide.with(this)
+                        .asBitmap()
+                        .load(result!!.uri)
+                        .into(target)
+                }
+            }
         }
     }
 
-    private fun startCrop() {
-        // start picker to get image for cropping and then use the image in cropping activity
-        cropImage.launch(
-            options {
-                setGuidelines(Guidelines.ON)
-            }
-        )
+    private val target = object : CustomTarget<Bitmap>() {
 
-        //start picker to get image for cropping from only gallery and then use the image in
-        //cropping activity
-        cropImage.launch(
-            options {
-                setImagePickerContractOptions(
-                    PickImageContractOptions(includeGallery = true, includeCamera = false)
-                )
-            }
-        )
+        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+            val fileName = "${UUID.randomUUID()}.jpg"
+            val path = "${externalCacheDir?.absolutePath}/$fileName"
+            val file = resource.createFile(path)
 
-        // start cropping activity for pre-acquired image saved on the device and customize settings
-        cropImage.launch(
-            options(uri = imageUri) {
-                setGuidelines(Guidelines.ON)
-                setOutputCompressFormat(CompressFormat.PNG)
-            }
-        )
+            FirebaseStorage.getInstance().reference
+                .child(fileName)
+                .putStream(FileInputStream(file))
+                .addOnSuccessListener {
+                    Log.d(Utils.tag, "Image ${it.task.result}")
+                }.addOnFailureListener {
+                    it.printStackTrace()
+                }.addOnPausedListener {
+                    Log.d(Utils.tag, "Upload is paused")
+                }.addOnProgressListener {
+                    val progress = (100.0 * it.bytesTransferred) / it.totalByteCount
+                    Log.d(Utils.tag, "Upload is $progress% done")
+                }
+
+        }
+
+        override fun onLoadCleared(placeholder: Drawable?) {}
     }
 }

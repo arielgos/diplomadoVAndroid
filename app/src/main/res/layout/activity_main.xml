@@ -6,4 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".AMain">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/photo"
+        android:elevation="3dp"
+        android:src="@drawable/ic_camera" />
+
 </RelativeLayout>

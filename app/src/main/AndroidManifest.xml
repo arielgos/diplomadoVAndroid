@@ -53,6 +53,11 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
+        <!-- Crop Activity-->
+        <activity
+            android:name="com.canhub.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
+
         <service
             android:name=".service.SMessaging"
             android:enabled="true"
