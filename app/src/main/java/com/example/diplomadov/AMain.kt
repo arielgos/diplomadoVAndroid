@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -56,7 +57,7 @@ class AMain : AppCompatActivity() {
     private var currentUser: User? = null
     private var shoppingReference: DatabaseReference? = null
     private var cartBadge: TextView? = null
-    private var products: MutableList<Product> = mutableListOf()
+    private var products = mutableListOf<Product>()
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -194,6 +195,7 @@ class AMain : AppCompatActivity() {
         binding.recyclerView.hasFixedSize()
         binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding.recyclerView.adapter = productAdapter
+
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -239,7 +241,12 @@ class AMain : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        cartBadge = menu.findItem(R.id.action_cart).actionView.findViewById<TextView>(R.id.cart_badge)
+        cartBadge = menu.findItem(R.id.action_cart).actionView.findViewById(R.id.cart_badge)
+        menu.findItem(R.id.action_cart).actionView.setOnClickListener {
+            val intent = Intent(this@AMain, ACart::class.java)
+            intent.putExtra("user", currentUser)
+            startActivity(intent)
+        }
         return true
     }
 
@@ -249,9 +256,6 @@ class AMain : AppCompatActivity() {
                 val intent = Intent(this@AMain, AChat::class.java)
                 intent.putExtra("user", currentUser)
                 startActivity(intent)
-            }
-            R.id.action_cart -> {
-
             }
             R.id.action_exit -> {
                 FirebaseAuth.getInstance().signOut()

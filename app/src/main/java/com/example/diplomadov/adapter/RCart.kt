@@ -5,42 +5,51 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diplomadov.R
-import com.example.diplomadov.model.Product
+import com.example.diplomadov.format
+import com.example.diplomadov.model.Cart
 
 class RCart(
-    private val context: Context
-) : ListAdapter<Product, RCart.ViewHolder>(CartDiffCallback) {
+) : ListAdapter<Cart, RCart.ViewHolder>(CartDiffCallback) {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private var current: Product? = null
+        private val productTextView: TextView = itemView.findViewById(R.id.product)
+        private val priceTextView: TextView = itemView.findViewById(R.id.price)
+        private val quantityTextView: TextView = itemView.findViewById(R.id.quantity)
+        private val totalTextView: TextView = itemView.findViewById(R.id.total)
+        private var current: Cart? = null
 
         @SuppressLint("SimpleDateFormat")
-        fun bind(item: Product, context: Context) {
+        fun bind(item: Cart) {
             current = item
+            productTextView.text = current?.productName
+            priceTextView.text = current?.price!!.format()
+            quantityTextView.text = current?.quantity.toString()
+            totalTextView.text = current?.total!!.format()
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_cart, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, context)
+        holder.bind(item)
     }
 }
 
-object CartDiffCallback : DiffUtil.ItemCallback<Product>() {
-    override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
+object CartDiffCallback : DiffUtil.ItemCallback<Cart>() {
+    override fun areItemsTheSame(oldItem: Cart, newItem: Cart): Boolean {
         return oldItem == newItem
     }
 
-    override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
-        return oldItem.id == newItem.id
+    override fun areContentsTheSame(oldItem: Cart, newItem: Cart): Boolean {
+        return oldItem.productId == newItem.productId
     }
 }

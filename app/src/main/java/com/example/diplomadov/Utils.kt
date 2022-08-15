@@ -34,3 +34,5 @@ fun Bitmap.createFile(path: String): File {
 fun String?.toIntOrDefault(default: Int = 0): Int {
     return this?.toIntOrNull() ?: default
 }
+
+fun Double.format(digits: Int = 2) = "%.${digits}f".format(this)

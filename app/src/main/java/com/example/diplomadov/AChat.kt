@@ -36,7 +36,7 @@ class AChat : AppCompatActivity() {
          * Analytics
          */
         Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
-            param(FirebaseAnalytics.Param.SCREEN_NAME, "Main")
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "Chat")
         }
 
         /**

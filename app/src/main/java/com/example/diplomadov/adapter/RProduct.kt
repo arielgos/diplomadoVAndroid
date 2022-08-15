@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.diplomadov.R
+import com.example.diplomadov.format
 import com.example.diplomadov.model.Product
 
 class RProduct(
@@ -35,7 +36,7 @@ class RProduct(
                 .into(imageView)
             nameTextView.text = current?.name
             descriptionTextView.text = current?.description
-            priceTextView.text = current?.price.toString()
+            priceTextView.text = current?.price!!.format()
         }
     }
 

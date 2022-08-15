@@ -6,8 +6,11 @@ import android.util.Log
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.diplomadov.adapter.RCart
 import com.example.diplomadov.adapter.RMessage
+import com.example.diplomadov.databinding.ActivityCartBinding
 import com.example.diplomadov.databinding.ActivityChatBinding
+import com.example.diplomadov.model.Cart
 import com.example.diplomadov.model.Message
 import com.example.diplomadov.model.User
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -21,14 +24,14 @@ import java.util.*
 class ACart : AppCompatActivity() {
 
     private lateinit var user: User
-    private lateinit var reference: DatabaseReference
-    var messageList = mutableListOf<Message>()
+    private lateinit var shoppingReference: DatabaseReference
+    var shoppingList = mutableListOf<Cart>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityChatBinding.inflate(layoutInflater)
+        val binding = ActivityCartBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.title = getString(R.string.chat)
+        supportActionBar?.title = getString(R.string.cart)
 
         user = intent.extras?.get("user") as User
 
@@ -36,44 +39,23 @@ class ACart : AppCompatActivity() {
          * Analytics
          */
         Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
-            param(FirebaseAnalytics.Param.SCREEN_NAME, "Main")
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "Cart")
         }
 
         /**
          * Realtime Database
          */
 
-        reference = FirebaseDatabase.getInstance().getReference("chats").child(user.id)
+        shoppingReference = FirebaseDatabase.getInstance().getReference("carts").child(user.id)
 
-        binding.message.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEND) {
-                binding.send.callOnClick()
-                return@setOnEditorActionListener true
-            }
-            false
-        }
 
-        binding.send.setOnClickListener {
-            val key = reference.push().key
-            val message = Message(
-                uid = user.id,
-                name = user.name,
-                message = binding.message.text.toString(),
-                date = Date().time
-            )
-            reference.child(key!!).setValue(message)
-            binding.message.text = null
-        }
-
-        reference.addChildEventListener(object : ChildEventListener {
+        shoppingReference.addChildEventListener(object : ChildEventListener {
             @SuppressLint("NotifyDataSetChanged")
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val message = snapshot.getValue<Message>()
-                message?.own = message?.uid == user.id
-                Log.d(Utils.tag, "${message?.message} / ${message?.own}")
-                messageList.add(message!!)
+                val cart = snapshot.getValue<Cart>()
+                shoppingList.add(cart!!)
                 binding.recyclerView.adapter?.notifyDataSetChanged()
-                binding.recyclerView.scrollToPosition(messageList.size - 1)
+                binding.recyclerView.scrollToPosition(shoppingList.size - 1)
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
@@ -94,11 +76,11 @@ class ACart : AppCompatActivity() {
 
         })
 
-        val messageAdapter = RMessage(applicationContext)
-        messageAdapter.submitList(messageList)
+        val cartAdapter = RCart()
+        cartAdapter.submitList(shoppingList)
         binding.recyclerView.hasFixedSize()
         binding.recyclerView.layoutManager = LinearLayoutManager(applicationContext)
-        binding.recyclerView.adapter = messageAdapter
+        binding.recyclerView.adapter = cartAdapter
 
     }
 }
