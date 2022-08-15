@@ -86,11 +86,6 @@ class AMain : AppCompatActivity() {
                     Log.d(Utils.tag, "Push Notification token $token")
                 })
 
-                /**
-                 * Realtime
-                 */
-                FirebaseDatabase.getInstance().getReference(currentUser?.id!!).setValue(listOf(""))
-
             }.addOnFailureListener {
                 it.printStackTrace()
             }
@@ -168,13 +163,18 @@ class AMain : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.action_chat -> {
+                val intent = Intent(this@AMain, AChat::class.java)
+                intent.putExtra("user", currentUser)
+                startActivity(intent)
+            }
+            R.id.action_cart -> {
+
+            }
             R.id.action_exit -> {
                 FirebaseAuth.getInstance().signOut()
                 startActivity(Intent(this@AMain, ASplash::class.java))
                 finish()
-            }
-            R.id.action_chat -> {
-
             }
         }
         return super.onOptionsItemSelected(item)

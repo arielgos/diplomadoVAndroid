@@ -53,6 +53,13 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".AChat"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:parentActivityName=".AMain"
+            android:screenOrientation="portrait" />
+
         <!-- Crop Activity-->
         <activity
             android:name="com.canhub.cropper.CropImageActivity"

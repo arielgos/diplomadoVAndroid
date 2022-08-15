@@ -1,11 +1,13 @@
 package com.example.diplomadov.model
 
-class User(
+import java.io.Serializable
+
+data class User(
     var id: String,
     var name: String,
     var email: String,
     var token: String = "",
     var profile: Int = 0
-) {
+) : Serializable {
     constructor() : this("", "", "", "", 0)
 }
