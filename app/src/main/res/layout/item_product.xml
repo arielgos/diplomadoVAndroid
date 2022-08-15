@@ -39,9 +39,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:layout_margin="3dp"
         android:background="@drawable/curve_teal"
         android:padding="3dp"
-        android:textSize="9sp"
+        android:textSize="11sp"
+        android:textStyle="bold"
         tools:ignore="SmallSp" />
 
 </RelativeLayout>
