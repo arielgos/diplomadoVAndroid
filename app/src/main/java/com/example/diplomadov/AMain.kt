@@ -1,5 +1,6 @@
 package com.example.diplomadov
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -16,10 +17,17 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.example.diplomadov.adapter.OnProductClickListener
+import com.example.diplomadov.adapter.RMessage
+import com.example.diplomadov.adapter.RProduct
 import com.example.diplomadov.databinding.ActivityMainBinding
+import com.example.diplomadov.model.Cart
+import com.example.diplomadov.model.Message
 import com.example.diplomadov.model.Product
 import com.example.diplomadov.model.User
 import com.example.diplomadov.service.SMessaging
@@ -29,6 +37,7 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
@@ -40,6 +49,7 @@ import com.google.firebase.storage.FirebaseStorage
 import java.io.ByteArrayOutputStream
 import java.io.FileInputStream
 import java.util.*
+import kotlin.math.absoluteValue
 
 class AMain : AppCompatActivity() {
 
@@ -48,6 +58,7 @@ class AMain : AppCompatActivity() {
     private var cartBadge: TextView? = null
     private var products: MutableList<Product> = mutableListOf()
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
@@ -149,11 +160,40 @@ class AMain : AppCompatActivity() {
                     Log.d(Utils.tag, "${document.id} => ${document.data}")
                     products.add(document.toObject(Product::class.java))
                 }
+                binding.recyclerView.adapter?.notifyDataSetChanged()
             }.addOnFailureListener {
                 it.printStackTrace()
             }
 
 
+        /**
+         * Actions
+         */
+        val productAdapter = RProduct(applicationContext, OnProductClickListener { item ->
+
+            shoppingReference?.child(item.id)?.get()?.addOnSuccessListener {
+                var cart = it.getValue<Cart>()
+                if (cart == null) {
+                    cart = Cart(
+                        productId = item.id,
+                        productName = item.name,
+                        price = item.price,
+                        quantity = 0,
+                        total = item.price
+                    )
+                }
+                cart.quantity = cart.quantity?.plus(1)
+                cart.total = cart.price?.times(cart.quantity!!)
+
+                shoppingReference?.child(item.id)?.setValue(cart)
+            }
+
+            Toast.makeText(applicationContext, "${item.name} agregado al carrito", Toast.LENGTH_SHORT).show()
+        })
+        productAdapter.submitList(products)
+        binding.recyclerView.hasFixedSize()
+        binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        binding.recyclerView.adapter = productAdapter
     }
 
     override fun onNewIntent(intent: Intent?) {

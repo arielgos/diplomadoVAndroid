@@ -5,22 +5,37 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.diplomadov.R
 import com.example.diplomadov.model.Product
 
 class RProduct(
-    private val context: Context
+    private val context: Context,
+    private val onClickListener: OnProductClickListener
 ) : ListAdapter<Product, RProduct.ViewHolder>(ProductDiffCallback) {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+        private val imageView: ImageView = itemView.findViewById(R.id.image)
+        private val nameTextView: TextView = itemView.findViewById(R.id.name)
+        private val descriptionTextView: TextView = itemView.findViewById(R.id.description)
+        private val priceTextView: TextView = itemView.findViewById(R.id.price)
         private var current: Product? = null
 
-        @SuppressLint("SimpleDateFormat")
+        @SuppressLint("SimpleDateFormat", "CheckResult")
         fun bind(item: Product, context: Context) {
             current = item
+            Glide.with(context)
+                .asBitmap()
+                .load(current?.image)
+                .into(imageView)
+            nameTextView.text = current?.name
+            descriptionTextView.text = current?.description
+            priceTextView.text = current?.price.toString()
         }
     }
 
@@ -30,8 +45,11 @@ class RProduct(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val message = getItem(position)
-        holder.bind(message, context)
+        val item = getItem(position)
+        holder.itemView.setOnClickListener {
+            onClickListener.onClick(item)
+        }
+        holder.bind(item, context)
     }
 }
 
@@ -43,4 +61,8 @@ object ProductDiffCallback : DiffUtil.ItemCallback<Product>() {
     override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
         return oldItem.id == newItem.id
     }
+}
+
+class OnProductClickListener(val clickListener: (item: Product) -> Unit) {
+    fun onClick(item: Product) = clickListener(item)
 }

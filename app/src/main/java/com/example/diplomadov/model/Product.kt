@@ -11,5 +11,5 @@ data class Product(
     var price: Double = 0.0,
     var status: Boolean = false
 ) : Serializable {
-    constructor() : this("", "", "", "", "")
+    constructor() : this("", "", "", "", "", 0.0, false)
 }
