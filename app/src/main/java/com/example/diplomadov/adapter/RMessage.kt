@@ -32,6 +32,12 @@ class RMessage(
         @SuppressLint("SimpleDateFormat")
         fun bind(message: Message, context: Context) {
             currentMessage = message
+
+            container.gravity = Gravity.END
+            background.background = ContextCompat.getDrawable(context, R.drawable.curve_purple)
+            background.gravity = Gravity.END
+            userTextView.visibility = View.GONE
+
             if (!currentMessage!!.own) {
                 container.gravity = Gravity.START
                 background.background = ContextCompat.getDrawable(context, R.drawable.curve_teal)
