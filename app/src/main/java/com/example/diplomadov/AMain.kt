@@ -191,6 +191,7 @@ class AMain : AppCompatActivity() {
 
             Toast.makeText(applicationContext, "${item.name} agregado al carrito", Toast.LENGTH_SHORT).show()
         })
+
         productAdapter.submitList(products)
         binding.recyclerView.hasFixedSize()
         binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
