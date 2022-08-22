@@ -1,4 +1,4 @@
-package com.example.diplomadov
+package com.agos.astore
 
 import org.junit.Test
 

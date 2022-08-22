@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.diplomadov">
+    package="com.agos.astore">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
+
     <uses-permission
         android:name="android.permission.POST_NOTIFICATIONS"
         tools:node="remove" />
@@ -36,7 +37,7 @@
             android:value="@string/default_channel" />
 
         <activity
-            android:name=".ASplash"
+            android:name="com.agos.astore.ASplash"
             android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -48,23 +49,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AMain"
+            android:name="com.agos.astore.AMain"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".AChat"
+            android:name="com.agos.astore.AChat"
             android:exported="false"
             android:launchMode="singleTask"
-            android:parentActivityName=".AMain"
+            android:parentActivityName="com.agos.astore.AMain"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ACart"
+            android:name="com.agos.astore.ACart"
             android:exported="false"
             android:launchMode="singleTask"
-            android:parentActivityName=".AMain"
+            android:parentActivityName="com.agos.astore.AMain"
             android:screenOrientation="portrait" />
 
         <!-- Crop Activity-->
@@ -74,7 +75,7 @@
 
         <!-- Service -->
         <service
-            android:name=".service.SMessaging"
+            android:name="com.agos.astore.service.SMessaging"
             android:enabled="true"
             android:exported="false">
             <intent-filter>

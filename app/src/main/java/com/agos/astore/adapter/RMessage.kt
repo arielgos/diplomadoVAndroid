@@ -1,4 +1,4 @@
-package com.example.diplomadov.adapter
+package com.agos.astore.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -12,9 +12,9 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.diplomadov.R
-import com.example.diplomadov.Utils
-import com.example.diplomadov.model.Message
+import com.agos.astore.R
+import com.agos.astore.Utils
+import com.agos.astore.model.Message
 import java.text.SimpleDateFormat
 
 class RMessage(

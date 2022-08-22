@@ -1,4 +1,4 @@
-package com.example.diplomadov
+package com.agos.astore
 
 import android.graphics.Bitmap
 import java.io.ByteArrayOutputStream

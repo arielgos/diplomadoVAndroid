@@ -1,12 +1,12 @@
-package com.example.diplomadov
+package com.agos.astore
 
 import android.content.Intent
 import android.content.IntentSender
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.example.diplomadov.databinding.ActivitySplashBinding
-import com.example.diplomadov.model.User
+import com.agos.astore.databinding.ActivitySplashBinding
+import com.agos.astore.model.User
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient

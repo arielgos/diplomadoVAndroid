@@ -1,4 +1,4 @@
-package com.example.diplomadov
+package com.agos.astore
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -6,10 +6,10 @@ import android.util.Log
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.diplomadov.adapter.RMessage
-import com.example.diplomadov.databinding.ActivityChatBinding
-import com.example.diplomadov.model.Message
-import com.example.diplomadov.model.User
+import com.agos.astore.adapter.RMessage
+import com.agos.astore.databinding.ActivityChatBinding
+import com.agos.astore.model.Message
+import com.agos.astore.model.User
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent

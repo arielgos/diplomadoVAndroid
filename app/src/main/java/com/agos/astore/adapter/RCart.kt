@@ -1,7 +1,6 @@
-package com.example.diplomadov.adapter
+package com.agos.astore.adapter
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.diplomadov.R
-import com.example.diplomadov.format
-import com.example.diplomadov.model.Cart
+import com.agos.astore.R
+import com.agos.astore.format
+import com.agos.astore.model.Cart
 
 class RCart(
 ) : ListAdapter<Cart, RCart.ViewHolder>(CartDiffCallback) {

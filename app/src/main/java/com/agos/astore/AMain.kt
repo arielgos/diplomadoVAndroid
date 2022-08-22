@@ -1,4 +1,4 @@
-package com.example.diplomadov
+package com.agos.astore
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -12,26 +12,21 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.example.diplomadov.adapter.OnProductClickListener
-import com.example.diplomadov.adapter.RMessage
-import com.example.diplomadov.adapter.RProduct
-import com.example.diplomadov.databinding.ActivityMainBinding
-import com.example.diplomadov.model.Cart
-import com.example.diplomadov.model.Message
-import com.example.diplomadov.model.Product
-import com.example.diplomadov.model.User
-import com.example.diplomadov.service.SMessaging
+import com.agos.astore.adapter.OnProductClickListener
+import com.agos.astore.adapter.RProduct
+import com.agos.astore.databinding.ActivityMainBinding
+import com.agos.astore.model.Cart
+import com.agos.astore.model.Product
+import com.agos.astore.model.User
+import com.agos.astore.service.SMessaging
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
@@ -47,10 +42,8 @@ import com.google.firebase.remoteconfig.ktx.get
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.google.firebase.storage.FirebaseStorage
-import java.io.ByteArrayOutputStream
 import java.io.FileInputStream
 import java.util.*
-import kotlin.math.absoluteValue
 
 class AMain : AppCompatActivity() {
 

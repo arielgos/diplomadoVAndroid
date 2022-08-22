@@ -1,4 +1,4 @@
-package com.example.diplomadov.model
+package com.agos.astore.model
 
 import com.google.firebase.database.IgnoreExtraProperties
 

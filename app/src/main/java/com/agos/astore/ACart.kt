@@ -1,18 +1,13 @@
-package com.example.diplomadov
+package com.agos.astore
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
-import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.diplomadov.adapter.RCart
-import com.example.diplomadov.adapter.RMessage
-import com.example.diplomadov.databinding.ActivityCartBinding
-import com.example.diplomadov.databinding.ActivityChatBinding
-import com.example.diplomadov.model.Cart
-import com.example.diplomadov.model.Message
-import com.example.diplomadov.model.User
+import com.agos.astore.adapter.RCart
+import com.agos.astore.databinding.ActivityCartBinding
+import com.agos.astore.model.Cart
+import com.agos.astore.model.User
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent

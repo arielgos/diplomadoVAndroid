@@ -1,10 +1,9 @@
-package com.example.diplomadov.service
+package com.agos.astore.service
 
 import android.content.Intent
 import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.example.diplomadov.R
-import com.example.diplomadov.Utils
+import com.agos.astore.Utils
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
