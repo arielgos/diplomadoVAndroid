@@ -152,6 +152,7 @@ class AMain : AppCompatActivity() {
         binding.addProduct.setOnClickListener {
             val intent = Intent(this@AMain, AProduct::class.java)
             intent.putExtra("product", Product())
+            intent.putExtra("user", currentUser)
             startActivityForResult(intent, Utils.requestNewProduct)
         }
 

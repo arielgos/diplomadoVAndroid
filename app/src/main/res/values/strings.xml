@@ -7,6 +7,13 @@
     <string name="photo">Foto</string>
     <string name="send">Enviar</string>
     <string name="product">Producto</string>
+    <string name="name">Nombre</string>
+    <string name="price">Precio</string>
+    <string name="description">Descripción</string>
+    <string name="tags">Categorías</string>
+    <string name="status">Estado</string>
+    <string name="save">Guardar</string>
+    <string name="cancel">Cancelar</string>
     <!--Cloud Messaging-->
     <string name="default_channel">amazingstore</string>
     <!--Google Client Id-->
