@@ -64,6 +64,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.google.firebase:firebase-storage-ktx'
 
+    /**
+     * ML Kit
+     */
+    implementation 'com.google.mlkit:object-detection:17.0.0'
+    implementation 'com.google.mlkit:image-labeling:17.0.7'
+
 
     /**
      * Google Services
