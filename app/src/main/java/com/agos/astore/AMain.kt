@@ -42,6 +42,9 @@ import com.google.firebase.remoteconfig.ktx.get
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.google.firebase.storage.FirebaseStorage
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.label.ImageLabeling
+import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
 import java.io.FileInputStream
 import java.util.*
 
@@ -134,11 +137,18 @@ class AMain : AppCompatActivity() {
         /**
          * Image Actions
          */
-        binding.camera.setOnClickListener {
+        binding.imageSearch.setOnClickListener {
             val intent = com.canhub.cropper.CropImage.activity()
                 .setAspectRatio(Utils.imageWith, Utils.imageHeight)
                 .getIntent(applicationContext)
-            startActivityForResult(intent, Utils.requestImage)
+            startActivityForResult(intent, Utils.requestSearchImage)
+        }
+
+        /**
+         * Add Product
+         */
+        binding.addProduct.setOnClickListener {
+
         }
 
         /**
@@ -203,7 +213,6 @@ class AMain : AppCompatActivity() {
                 }
             }
         }
-
     }
 
     override fun onResume() {
@@ -264,12 +273,28 @@ class AMain : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                Utils.requestImage -> {
+                Utils.requestSearchImage -> {
                     val result = com.canhub.cropper.CropImage.getActivityResult(data)
                     Glide.with(this)
                         .asBitmap()
                         .load(result!!.uri)
                         .into(target)
+                    /**
+                     * Image Labeling
+                     */
+                    val image = InputImage.fromFilePath(applicationContext, result!!.uri)
+                    val labeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS)
+                    labeler.process(image)
+                        .addOnSuccessListener { labels ->
+                            for (label in labels) {
+                                val text = label.text
+                                val confidence = label.confidence
+                                val index = label.index
+                            }
+                        }
+                        .addOnFailureListener { e ->
+                            e.printStackTrace()
+                        }
                 }
             }
         }
@@ -281,6 +306,7 @@ class AMain : AppCompatActivity() {
             val fileName = "${UUID.randomUUID()}.jpg"
             val path = "${externalCacheDir?.absolutePath}/$fileName"
             val file = resource.createFile(path)
+
 
             FirebaseStorage.getInstance().reference
                 .child(fileName)

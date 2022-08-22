@@ -6,6 +6,7 @@
     <string name="chat">Chat</string>
     <string name="photo">Foto</string>
     <string name="send">Enviar</string>
+    <string name="product">Producto</string>
     <!--Cloud Messaging-->
     <string name="default_channel">amazingstore</string>
     <!--Google Client Id-->

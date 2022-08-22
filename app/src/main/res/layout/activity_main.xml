@@ -14,15 +14,27 @@
         android:dividerHeight="0dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/camera"
+        android:id="@+id/image_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="start|bottom"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/photo"
+        android:elevation="3dp"
+        android:src="@drawable/ic_image_search" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_product"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
-        android:contentDescription="@string/photo"
+        android:contentDescription="@string/product"
         android:elevation="3dp"
-        android:src="@drawable/ic_camera" />
+        android:src="@drawable/ic_add_product" />
 
 </RelativeLayout>
