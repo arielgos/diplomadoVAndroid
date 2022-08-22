@@ -45,6 +45,8 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.label.ImageLabeling
 import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
+import com.google.mlkit.vision.objects.ObjectDetection
+import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions
 import java.io.FileInputStream
 import java.util.*
 
@@ -290,6 +292,32 @@ class AMain : AppCompatActivity() {
                                 val text = label.text
                                 val confidence = label.confidence
                                 val index = label.index
+                                Log.d(Utils.tag, "Label [$index] $confidence / $text")
+                            }
+                        }
+                        .addOnFailureListener { e ->
+                            e.printStackTrace()
+                        }
+                    /**
+                     * Object recognition
+                     */
+                    val objectDetectorOptions = ObjectDetectorOptions.Builder()
+                        .setDetectorMode(ObjectDetectorOptions.SINGLE_IMAGE_MODE)
+                        .enableMultipleObjects()
+                        .enableClassification()
+                        .build()
+                    val objectDetector = ObjectDetection.getClient(objectDetectorOptions)
+                    objectDetector.process(image)
+                        .addOnSuccessListener { detectedObjects ->
+                            for (detectedObject in detectedObjects) {
+                                val boundingBox = detectedObject.boundingBox
+                                val trackingId = detectedObject.trackingId
+                                for (label in detectedObject.labels) {
+                                    val text = label.text
+                                    val confidence = label.confidence
+                                    val index = label.index
+                                    Log.d(Utils.tag, "Object Detection [$trackingId-$index] $confidence / $text (${boundingBox.top},${boundingBox.left},${boundingBox.bottom},${boundingBox.right})")
+                                }
                             }
                         }
                         .addOnFailureListener { e ->
