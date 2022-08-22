@@ -150,7 +150,9 @@ class AMain : AppCompatActivity() {
          * Add Product
          */
         binding.addProduct.setOnClickListener {
-
+            val intent = Intent(this@AMain, AProduct::class.java)
+            intent.putExtra("product", Product())
+            startActivityForResult(intent, Utils.requestNewProduct)
         }
 
         /**
@@ -311,18 +313,20 @@ class AMain : AppCompatActivity() {
                         .addOnSuccessListener { detectedObjects ->
                             for (detectedObject in detectedObjects) {
                                 val boundingBox = detectedObject.boundingBox
-                                val trackingId = detectedObject.trackingId
                                 for (label in detectedObject.labels) {
                                     val text = label.text
                                     val confidence = label.confidence
                                     val index = label.index
-                                    Log.d(Utils.tag, "Object Detection [$trackingId-$index] $confidence / $text (${boundingBox.top},${boundingBox.left},${boundingBox.bottom},${boundingBox.right})")
+                                    Log.d(Utils.tag, "Object Detection [$index] $confidence / $text (${boundingBox.top},${boundingBox.left},${boundingBox.bottom},${boundingBox.right})")
                                 }
                             }
                         }
                         .addOnFailureListener { e ->
                             e.printStackTrace()
                         }
+                }
+                Utils.requestNewProduct -> {
+
                 }
             }
         }

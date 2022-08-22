@@ -41,7 +41,7 @@
             android:value="@string/default_channel" />
 
         <activity
-            android:name="com.agos.astore.ASplash"
+            android:name=".ASplash"
             android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -53,23 +53,30 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.agos.astore.AMain"
+            android:name=".AMain"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.agos.astore.AChat"
+            android:name=".AChat"
             android:exported="false"
             android:launchMode="singleTask"
-            android:parentActivityName="com.agos.astore.AMain"
+            android:parentActivityName=".AMain"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.agos.astore.ACart"
+            android:name=".ACart"
             android:exported="false"
             android:launchMode="singleTask"
-            android:parentActivityName="com.agos.astore.AMain"
+            android:parentActivityName=".AMain"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".AProduct"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:parentActivityName=".AMain"
             android:screenOrientation="portrait" />
 
         <!-- Crop Activity-->
@@ -79,7 +86,7 @@
 
         <!-- Service -->
         <service
-            android:name="com.agos.astore.service.SMessaging"
+            android:name=".service.SMessaging"
             android:enabled="true"
             android:exported="false">
             <intent-filter>

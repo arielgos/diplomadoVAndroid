@@ -9,9 +9,10 @@ class Utils {
     companion object {
         const val tag = "AmazingStore"
         const val dateFormat = "dd/MM/yyyy HH:mm"
+        const val imageWith = 1500
+        const val imageHeight = 1500
         const val requestSearchImage = 10000
-        const val imageWith = 1000
-        const val imageHeight = 1000
+        const val requestNewProduct = 2000
     }
 }
 
