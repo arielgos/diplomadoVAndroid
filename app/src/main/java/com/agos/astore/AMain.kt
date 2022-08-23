@@ -312,6 +312,7 @@ class AMain : AppCompatActivity() {
                     val objectDetector = ObjectDetection.getClient(objectDetectorOptions)
                     objectDetector.process(image)
                         .addOnSuccessListener { detectedObjects ->
+                            Log.d(Utils.tag, "Object Detection ${detectedObjects.size}")
                             for (detectedObject in detectedObjects) {
                                 val boundingBox = detectedObject.boundingBox
                                 for (label in detectedObject.labels) {
