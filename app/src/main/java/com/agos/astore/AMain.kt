@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.agos.astore.adapter.OnProductClickListener
+import com.agos.astore.adapter.OnProductLongClickListener
 import com.agos.astore.adapter.RProduct
 import com.agos.astore.databinding.ActivityMainBinding
 import com.agos.astore.model.Cart
@@ -57,10 +58,12 @@ class AMain : AppCompatActivity() {
     private var cartBadge: TextView? = null
     private var products = mutableListOf<Product>()
 
+    private lateinit var binding: ActivityMainBinding
+
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         /**
@@ -198,6 +201,11 @@ class AMain : AppCompatActivity() {
             }
 
             Toast.makeText(applicationContext, "${item.name} agregado al carrito", Toast.LENGTH_SHORT).show()
+        }, OnProductLongClickListener { item ->
+            val intent = Intent(this@AMain, AProduct::class.java)
+            intent.putExtra("product", item)
+            intent.putExtra("user", currentUser)
+            startActivityForResult(intent, Utils.requestNewProduct)
         })
 
         productAdapter.submitList(products)
@@ -274,6 +282,7 @@ class AMain : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
@@ -328,7 +337,26 @@ class AMain : AppCompatActivity() {
                         }
                 }
                 Utils.requestNewProduct -> {
+                    //update firestore listing
 
+                    /**
+                     * Firestore
+                     */
+                    FirebaseFirestore.getInstance()
+                        .collection("products")
+                        .whereGreaterThan("price", 0.0)
+                        .whereEqualTo("status", true)
+                        .get()
+                        .addOnSuccessListener { documents ->
+                            products.clear()
+                            for (document in documents) {
+                                Log.d(Utils.tag, "${document.id} => ${document.data}")
+                                products.add(document.toObject(Product::class.java))
+                            }
+                            binding.recyclerView.adapter?.notifyDataSetChanged()
+                        }.addOnFailureListener {
+                            it.printStackTrace()
+                        }
                 }
             }
         }

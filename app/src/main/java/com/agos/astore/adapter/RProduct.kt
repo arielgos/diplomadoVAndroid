@@ -17,7 +17,8 @@ import com.agos.astore.model.Product
 
 class RProduct(
     private val context: Context,
-    private val onClickListener: OnProductClickListener
+    private val onClickListener: OnProductClickListener,
+    private val onLonClickListener: OnProductLongClickListener
 ) : ListAdapter<Product, RProduct.ViewHolder>(ProductDiffCallback) {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -50,7 +51,14 @@ class RProduct(
         holder.itemView.setOnClickListener {
             onClickListener.onClick(item)
         }
+
+        holder.itemView.setOnLongClickListener {
+            onLonClickListener.onLongClick(item)
+            return@setOnLongClickListener true
+        }
+
         holder.bind(item, context)
+
     }
 }
 
@@ -66,4 +74,8 @@ object ProductDiffCallback : DiffUtil.ItemCallback<Product>() {
 
 class OnProductClickListener(val clickListener: (item: Product) -> Unit) {
     fun onClick(item: Product) = clickListener(item)
+}
+
+class OnProductLongClickListener(val longClickListener: (item: Product) -> Unit) {
+    fun onLongClick(item: Product) = longClickListener(item)
 }
