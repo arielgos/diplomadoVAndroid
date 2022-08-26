@@ -16,6 +16,11 @@ android {
         versionCode 3
         versionName "1.2"
 
+        /**
+         * Custom Properties
+         */
+        archivesBaseName = "amazingStore.$versionName"
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
