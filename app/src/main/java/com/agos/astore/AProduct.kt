@@ -61,7 +61,6 @@ class AProduct : AppCompatActivity() {
             save.setOnClickListener {
 
                 product.name = name.text.toString()
-                product.image = ""
                 product.description = description.text.toString()
                 product.tags = tags.text.toString()
                 product.price = price.text.toString().toDouble()
@@ -156,7 +155,9 @@ class AProduct : AppCompatActivity() {
                                 Log.d(Utils.tag, "Label [$index] $confidence / $text")
                                 tags.add(text)
                             }
-                            product.tags = tags.joinToString { "," }
+                            product.tags = tags.joinToString(",") {
+                                it
+                            }
                             binding.tags.setText(product.tags)
                         }
                         .addOnFailureListener { e ->
@@ -179,13 +180,9 @@ class AProduct : AppCompatActivity() {
                 .putStream(FileInputStream(file))
                 .addOnSuccessListener {
                     Log.d(Utils.tag, "Image ${it.task.result}")
+                    product.image = fileName
                 }.addOnFailureListener {
                     it.printStackTrace()
-                }.addOnPausedListener {
-                    Log.d(Utils.tag, "Upload is paused")
-                }.addOnProgressListener {
-                    val progress = (100.0 * it.bytesTransferred) / it.totalByteCount
-                    Log.d(Utils.tag, "Upload is $progress% done")
                 }
         }
 

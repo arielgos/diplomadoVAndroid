@@ -189,6 +189,7 @@ class AMain : AppCompatActivity() {
                     cart = Cart(
                         productId = item.id,
                         productName = item.name,
+                        productImage = item.image,
                         price = item.price,
                         quantity = 0,
                         total = item.price

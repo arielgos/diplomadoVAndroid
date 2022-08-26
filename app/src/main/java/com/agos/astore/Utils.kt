@@ -11,6 +11,7 @@ class Utils {
         const val dateFormat = "dd/MM/yyyy HH:mm"
         const val imageWith = 1500
         const val imageHeight = 1500
+        const val imageUrl = "https://firebasestorage.googleapis.com/v0/b/diplomadov-f5e39.appspot.com/o/"
         const val requestSearchImage = 10000
         const val requestNewProduct = 2000
     }

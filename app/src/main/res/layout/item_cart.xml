@@ -1,46 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:orientation="vertical"
-    android:padding="5dp">
+    android:padding="5dp"
+    android:weightSum="100">
 
-    <TextView
-        android:id="@+id/product"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_marginEnd="5dp"
+        android:layout_weight="20"
+        android:background="@color/teal_200"
+        android:clickable="true"
+        android:focusable="true"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-        android:textStyle="bold" />
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="100">
+        android:layout_weight="80"
+        android:orientation="vertical"
+        android:paddingTop="5dp">
 
         <TextView
-            android:id="@+id/price"
-            android:layout_width="0dp"
+            android:id="@+id/product"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="30"
-            android:gravity="end" />
-
-        <TextView
-            android:id="@+id/quantity"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="30"
-            android:gravity="end" />
-
-        <TextView
-            android:id="@+id/total"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="40"
-            android:gravity="end"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
             android:textStyle="bold" />
 
-    </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="100">
 
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="30"
+                android:gravity="end" />
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/quantity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="30"
+                android:gravity="end" />
+
+            <TextView
+                android:id="@+id/total"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="40"
+                android:gravity="end"
+                android:textStyle="bold" />
+
+        </TableRow>
+    </LinearLayout>
+
+</TableRow>

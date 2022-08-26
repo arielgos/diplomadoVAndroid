@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.agos.astore.R
+import com.agos.astore.Utils
 import com.agos.astore.format
 import com.agos.astore.model.Product
 
@@ -24,19 +25,21 @@ class RProduct(
 
         private val imageView: ImageView = itemView.findViewById(R.id.image)
         private val nameTextView: TextView = itemView.findViewById(R.id.name)
-        private val descriptionTextView: TextView = itemView.findViewById(R.id.description)
+        private val tagsTextView: TextView = itemView.findViewById(R.id.tags)
         private val priceTextView: TextView = itemView.findViewById(R.id.price)
         private var current: Product? = null
 
         @SuppressLint("SimpleDateFormat", "CheckResult")
         fun bind(item: Product, context: Context) {
             current = item
-            Glide.with(context)
-                .asBitmap()
-                .load(current?.image)
-                .into(imageView)
+            if (current?.image?.isNotEmpty() == true) {
+                Glide.with(context)
+                    .asBitmap()
+                    .load("${Utils.imageUrl}${current?.image}?alt=media")
+                    .into(imageView)
+            }
             nameTextView.text = current?.name
-            descriptionTextView.text = current?.description
+            tagsTextView.text = current?.tags
             priceTextView.text = current?.price!!.format()
         }
     }
