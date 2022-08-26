@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="97"
         android:orientation="vertical"
-        android:paddingTop="5dp">
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/id"
@@ -40,14 +40,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="30"
-                android:gravity="end" />
+                android:gravity="center" />
 
             <TextView
                 android:id="@+id/details"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="30"
-                android:gravity="end" />
+                android:gravity="center" />
 
             <TextView
                 android:id="@+id/total"

@@ -37,15 +37,26 @@ class AOrders : AppCompatActivity() {
             .collection("orders")
             .whereEqualTo("userId", user.id)
             .addSnapshotListener { snapshots, _ ->
-                for (document in snapshots!!.documents) {
-                    Log.d(Utils.tag, "${document.id} => ${document.data}")
-                    document.toObject(Order::class.java)?.let { orders.add(it) }
-                }
                 for (dc in snapshots!!.documentChanges) {
+                    var order = dc.document.toObject(Order::class.java)
+                    order.id = dc.document.id
                     when (dc.type) {
-                        DocumentChange.Type.ADDED -> Log.d(Utils.tag, "New order: ${dc.document.data}")
-                        DocumentChange.Type.MODIFIED -> Log.d(Utils.tag, "Modified order: ${dc.document.data}")
-                        DocumentChange.Type.REMOVED -> Log.d(Utils.tag, "Removed order: ${dc.document.data}")
+                        DocumentChange.Type.ADDED -> {
+                            Log.d(Utils.tag, "New order: ${order.id}")
+                            orders.add(order)
+                        }
+                        DocumentChange.Type.MODIFIED -> {
+                            Log.d(Utils.tag, "Modified order: ${order.id}")
+                            orders[orders.indexOfFirst {
+                                it.id == order.id
+                            }] = order
+                        }
+                        DocumentChange.Type.REMOVED -> {
+                            Log.d(Utils.tag, "Removed order: ${order.id}")
+                            orders.removeAt(orders.indexOfFirst {
+                                it.id == order.id
+                            })
+                        }
                     }
                 }
                 binding.recyclerView.adapter?.notifyDataSetChanged()

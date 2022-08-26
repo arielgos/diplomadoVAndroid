@@ -41,8 +41,8 @@ class ROrder(
             }
             idTextView.text = item.id
             dateTextView.text = item.date.toFormattedString()
-            detailsTextView.text = item.details.count().toString()
-            totalTextView.text = current?.total!!.format()
+            detailsTextView.text = "Productos(${item.details.count()})"
+            totalTextView.text = item.total.format()
         }
     }
 
