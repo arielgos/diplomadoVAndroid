@@ -27,6 +27,7 @@ import com.agos.astore.databinding.ActivityMainBinding
 import com.agos.astore.model.Cart
 import com.agos.astore.model.Product
 import com.agos.astore.model.User
+import com.agos.astore.receiver.BRMessage
 import com.agos.astore.service.SMessaging
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -59,6 +60,8 @@ class AMain : AppCompatActivity() {
     private var products = mutableListOf<Product>()
 
     private lateinit var binding: ActivityMainBinding
+
+    private val messageReceiver = BRMessage()
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -238,21 +241,6 @@ class AMain : AppCompatActivity() {
         LocalBroadcastManager.getInstance(applicationContext)
             .unregisterReceiver(messageReceiver)
         super.onPause()
-    }
-
-    private val messageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            if (intent?.extras != null) {
-                val bundle = intent.extras
-                if (bundle != null) {
-                    for (key in bundle.keySet()) {
-                        Log.d(Utils.tag, "Key: $key - Value: ${bundle.get(key)}")
-                    }
-
-                    Toast.makeText(applicationContext, "${bundle.get("body")}", Toast.LENGTH_LONG).show()
-                }
-            }
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

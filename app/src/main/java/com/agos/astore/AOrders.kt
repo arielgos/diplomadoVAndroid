@@ -1,13 +1,17 @@
 package com.agos.astore
 
 import android.annotation.SuppressLint
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.agos.astore.adapter.ROrder
 import com.agos.astore.databinding.ActivityListBinding
 import com.agos.astore.model.*
+import com.agos.astore.receiver.BRMessage
+import com.agos.astore.service.SMessaging
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
@@ -20,6 +24,8 @@ class AOrders : AppCompatActivity() {
     private lateinit var user: User
     var orders = mutableListOf<Order>()
     private lateinit var binding: ActivityListBinding
+
+    private val messageReceiver = BRMessage()
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,5 +80,17 @@ class AOrders : AppCompatActivity() {
         Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
             param(FirebaseAnalytics.Param.SCREEN_NAME, "Orders")
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        LocalBroadcastManager.getInstance(applicationContext)
+            .registerReceiver(messageReceiver, IntentFilter(SMessaging.broadcastReceiver))
+    }
+
+    override fun onPause() {
+        LocalBroadcastManager.getInstance(applicationContext)
+            .unregisterReceiver(messageReceiver)
+        super.onPause()
     }
 }
