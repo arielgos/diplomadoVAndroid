@@ -25,6 +25,7 @@ import com.agos.astore.adapter.OnProductLongClickListener
 import com.agos.astore.adapter.RProduct
 import com.agos.astore.databinding.ActivityMainBinding
 import com.agos.astore.model.Cart
+import com.agos.astore.model.Order
 import com.agos.astore.model.Product
 import com.agos.astore.model.User
 import com.agos.astore.receiver.BRMessage
@@ -36,6 +37,7 @@ import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
+import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
@@ -168,17 +170,30 @@ class AMain : AppCompatActivity() {
             .collection("products")
             .whereGreaterThan("price", 0.0)
             .whereEqualTo("status", true)
-            .get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    Log.d(Utils.tag, "${document.id} => ${document.data}")
-                    products.add(document.toObject(Product::class.java))
+            .addSnapshotListener { snapshots, _ ->
+                for (dc in snapshots!!.documentChanges) {
+                    var product = dc.document.toObject(Product::class.java)
+                    when (dc.type) {
+                        DocumentChange.Type.ADDED -> {
+                            Log.d(Utils.tag, "New Product: ${product.id}")
+                            products.add(product)
+                        }
+                        DocumentChange.Type.MODIFIED -> {
+                            Log.d(Utils.tag, "Modified Product: ${product.id}")
+                            products[products.indexOfFirst {
+                                it.id == product.id
+                            }] = product
+                        }
+                        DocumentChange.Type.REMOVED -> {
+                            Log.d(Utils.tag, "Removed Product: ${product.id}")
+                            products.removeAt(products.indexOfFirst {
+                                it.id == product.id
+                            })
+                        }
+                    }
                 }
                 binding.recyclerView.adapter?.notifyDataSetChanged()
-            }.addOnFailureListener {
-                it.printStackTrace()
             }
-
 
         /**
          * Actions
