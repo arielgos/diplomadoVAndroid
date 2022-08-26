@@ -29,12 +29,15 @@ class ROrder(
         @SuppressLint("SimpleDateFormat")
         fun bind(item: Order, context: Context) {
             when (item.status) {
+                //pending
                 0 -> {
                     statusTextView.setBackgroundColor(context.resources.getColor(R.color.purple_200))
                 }
+                //in progress
                 1 -> {
                     statusTextView.setBackgroundColor(context.resources.getColor(R.color.purple_500))
                 }
+                //delivered
                 2 -> {
                     statusTextView.setBackgroundColor(context.resources.getColor(R.color.purple_700))
                 }
