@@ -4,6 +4,8 @@ import android.graphics.Bitmap
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.text.SimpleDateFormat
+import java.util.*
 
 class Utils {
     companion object {
@@ -35,6 +37,10 @@ fun Bitmap.createFile(path: String): File {
 
 fun String?.toIntOrDefault(default: Int = 0): Int {
     return this?.toIntOrNull() ?: default
+}
+
+fun Date.toFormattedString(format: String = "dd/mm/yyyy"): String {
+    return SimpleDateFormat(format).format(this)
 }
 
 fun Double.format(digits: Int = 2) = "%.${digits}f".format(this)

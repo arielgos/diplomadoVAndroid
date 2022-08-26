@@ -11,6 +11,7 @@ import com.agos.astore.model.*
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
@@ -35,17 +36,22 @@ class AOrders : AppCompatActivity() {
         FirebaseFirestore.getInstance()
             .collection("orders")
             .whereEqualTo("userId", user.id)
-            .addSnapshotListener { value, _ ->
-                if (value != null) {
-                    for (document in value.documents) {
-                        Log.d(Utils.tag, "${document.id} => ${document.data}")
-                        document.toObject(Order::class.java)?.let { orders.add(it) }
+            .addSnapshotListener { snapshots, _ ->
+                for (document in snapshots!!.documents) {
+                    Log.d(Utils.tag, "${document.id} => ${document.data}")
+                    document.toObject(Order::class.java)?.let { orders.add(it) }
+                }
+                for (dc in snapshots!!.documentChanges) {
+                    when (dc.type) {
+                        DocumentChange.Type.ADDED -> Log.d(Utils.tag, "New order: ${dc.document.data}")
+                        DocumentChange.Type.MODIFIED -> Log.d(Utils.tag, "Modified order: ${dc.document.data}")
+                        DocumentChange.Type.REMOVED -> Log.d(Utils.tag, "Removed order: ${dc.document.data}")
                     }
                 }
                 binding.recyclerView.adapter?.notifyDataSetChanged()
             }
 
-        val orderAdapter = ROrder()
+        val orderAdapter = ROrder(this@AOrders)
         orderAdapter.submitList(orders)
         binding.recyclerView.hasFixedSize()
         binding.recyclerView.layoutManager = LinearLayoutManager(applicationContext)
