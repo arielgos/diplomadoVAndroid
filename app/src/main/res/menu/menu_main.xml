@@ -7,7 +7,7 @@
         android:icon="@drawable/ic_chat"
         android:orderInCategory="100"
         android:title="@string/chat"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_cart"
@@ -15,13 +15,20 @@
         android:orderInCategory="100"
         android:title="@string/cart"
         app:actionLayout="@layout/custom_action_cart"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_orders"
+        android:icon="@drawable/ic_orders"
+        android:orderInCategory="100"
+        android:title="@string/orders"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_exit"
         android:icon="@drawable/ic_exit"
         android:orderInCategory="100"
         android:title="@string/exit"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
 </menu>

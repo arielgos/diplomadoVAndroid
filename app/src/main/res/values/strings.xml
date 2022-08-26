@@ -14,6 +14,7 @@
     <string name="status">Estado</string>
     <string name="save">Guardar</string>
     <string name="cancel">Cancelar</string>
+    <string name="orders">Pedidos</string>
     <!--Cloud Messaging-->
     <string name="default_channel">amazingstore</string>
     <!--Google Client Id-->
