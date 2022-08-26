@@ -90,7 +90,6 @@ class AMain : AppCompatActivity() {
             .document(FirebaseAuth.getInstance().currentUser?.uid!!).get()
             .addOnSuccessListener {
                 currentUser = it.toObject(User::class.java)
-
                 /**
                  * Cloud Messaging
                  */
@@ -271,6 +270,11 @@ class AMain : AppCompatActivity() {
         when (item.itemId) {
             R.id.action_chat -> {
                 val intent = Intent(this@AMain, AChat::class.java)
+                intent.putExtra("user", currentUser)
+                startActivity(intent)
+            }
+            R.id.action_orders -> {
+                val intent = Intent(this@AMain, AOrders::class.java)
                 intent.putExtra("user", currentUser)
                 startActivity(intent)
             }

@@ -1,20 +1,17 @@
 package com.agos.astore
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.agos.astore.adapter.RCart
-import com.agos.astore.databinding.ActivityCartBinding
+import com.agos.astore.databinding.ActivityListBinding
 import com.agos.astore.model.*
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -26,11 +23,11 @@ class ACart : AppCompatActivity() {
     private lateinit var user: User
     private lateinit var shoppingReference: DatabaseReference
     var shoppingList = mutableListOf<Cart>()
-    private lateinit var binding: ActivityCartBinding
+    private lateinit var binding: ActivityListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityCartBinding.inflate(layoutInflater)
+        binding = ActivityListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.title = getString(R.string.cart)
 

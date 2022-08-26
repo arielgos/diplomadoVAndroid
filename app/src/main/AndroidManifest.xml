@@ -77,6 +77,13 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".AOrders"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:parentActivityName=".AMain"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".AProduct"
             android:exported="false"
             android:launchMode="singleTask"
