@@ -92,7 +92,8 @@ class AMain : AppCompatActivity() {
          */
         FirebaseFirestore.getInstance()
             .collection("users")
-            .document(FirebaseAuth.getInstance().currentUser?.uid!!).get()
+            .document(FirebaseAuth.getInstance().currentUser?.uid!!)
+            .get()
             .addOnSuccessListener {
                 currentUser = it.toObject(User::class.java)
                 /**
